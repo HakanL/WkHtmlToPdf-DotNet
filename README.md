@@ -9,7 +9,36 @@ Library can be installed through Nuget. Run command bellow from the package mana
 PM> Install-Package DinkToPdf
 ```
 
-Copy native library to root folder of your project. From there .NET Core loads native library when native method is called with P/Invoke. You can find latest version of native library [here](https://github.com/rdvojmoc/DinkToPdf/tree/master/v0.12.4). Select appropriate library for your OS and platform (64 or 32 bit).
+Copy all native libraries 32 & 64 to a directory of your project. From there .NET Core loads native library when native method is called with P/Invoke. You can find latest version of native library [here](https://github.com/rdvojmoc/DinkToPdf/tree/master/v0.12.4). Select appropriate library for your OS and platform (64 or 32 bit).
+
+Make sure your .csproj is keeping the libraries onto the OutputDirectory (dotnet publish).
+It will make sure for Azure App Service Deployment that your App Service has all the required libs.
+
+Example:
+```xml
+<ItemGroup> 
+      <None Include="libs\\32 bit\\libwkhtmltox.dll">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="libs\\32 bit\\libwkhtmltox.dylib">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="libs\\32 bit\\libwkhtmltox.so">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+
+      <None Include="libs\\64 bit\\libwkhtmltox.dll">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="libs\\64 bit\\libwkhtmltox.dylib">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="libs\\64 bit\\libwkhtmltox.so">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+  </ItemGroup>
+```
+
 
 ### IMPORTANT
 Library was NOT tested with IIS. Library was tested in console applications and with Kestrel web server both for Web Application and Web API . 
@@ -82,12 +111,52 @@ converter.Convert(doc);
 ```
 
 ### Dependency injection
-Converter must be registered as singleton.
 
+Create a custom assembly loader in your Startup class.
 ```csharp
+
+internal class CustomAssemblyLoadContext : AssemblyLoadContext
+{
+    public IntPtr LoadUnmanagedLibrary(string absolutePath)
+    {
+        return LoadUnmanagedDll(absolutePath);
+    }
+    protected override IntPtr LoadUnmanagedDll(String unmanagedDllName)
+    {
+        return LoadUnmanagedDllFromPath(unmanagedDllName);
+    }
+    protected override Assembly Load(AssemblyName assemblyName)
+    {
+        throw new NotImplementedException();
+    }
+}
 public void ConfigureServices(IServiceCollection services)
 {
+    CustomAssemblyLoadContext context = new CustomAssemblyLoadContext();
+    var architectureFolder = (IntPtr.Size == 8) ? "64 bit" : "32 bit";
+    
+    // Check the platform and load the appropriate Library
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+    {
+        var wkHtmlToPdfPath = Path.Combine(Directory.GetCurrentDirectory(), $"libs\\{architectureFolder}\\libwkhtmltox.dylib");
+        context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
+    }
+    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+    {
+        var wkHtmlToPdfPath = Path.Combine(Directory.GetCurrentDirectory(), $"libs\\{architectureFolder}\\libwkhtmltox.so");
+        context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
+    }
+    else // RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+    {
+        var wkHtmlToPdfPath = Path.Combine(Directory.GetCurrentDirectory(), $"libs\\{architectureFolder}\\libwkhtmltox.dll");
+        context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
+    }
+
     // Add converter to DI
     services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 }
 ```
+
+Converter must be registered as singleton.
+
+
