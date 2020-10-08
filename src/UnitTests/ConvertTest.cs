@@ -1,6 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
@@ -100,6 +102,48 @@ namespace WkHtmlToPdfDotNet.UnitTests
 
             Assert.IsNotNull(pdf);
             Assert.IsTrue(pdf.Length > 10000);
+        }
+
+        [TestMethod]
+        public void ConvertToPdfWithImg()
+        {
+            var redFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assets", "red.jpg");
+            var blueFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assets", "blue.jpg");
+
+            var docRed = new HtmlToPdfDocument()
+            {
+                GlobalSettings = { 
+                    ColorMode = ColorMode.Color,
+                    Orientation = Orientation.Landscape,
+                    PaperSize = PaperKind.A4
+                },
+                Objects = {
+                    new ObjectSettings() {
+                        HtmlContent = $"<img src=\"{redFile}\">",
+                        WebSettings = { DefaultEncoding = "utf-8" }                        
+                    }
+                }
+            };
+
+            var docBlue = new HtmlToPdfDocument()
+            {
+                GlobalSettings = {
+                    ColorMode = ColorMode.Color,
+                    Orientation = Orientation.Landscape,
+                    PaperSize = PaperKind.A4
+                },
+                Objects = {
+                    new ObjectSettings() {
+                        HtmlContent = $"<img src=\"{blueFile}\">",
+                        WebSettings = { DefaultEncoding = "utf-8" }
+                    }
+                }
+            };
+
+            byte[] pdfRed = Converter.Convert(docRed);
+            byte[] pdfBlue = Converter.Convert(docBlue);
+
+            CollectionAssert.AreNotEqual(pdfRed, pdfBlue);
         }
 
         private byte[] GetPdfWithTableOfContents(string templatePage = "template.html")
