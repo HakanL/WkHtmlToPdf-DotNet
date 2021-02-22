@@ -44,8 +44,7 @@ namespace WkHtmlToPdfDotNet.UnitTests
             {
                 byte[] pdf = GetPdfWithTableOfContents();
 
-                if (!size.HasValue)
-                    size = pdf.Length;
+                size ??= pdf.Length;
 
                 Assert.IsNotNull(pdf);
 
@@ -113,7 +112,7 @@ namespace WkHtmlToPdfDotNet.UnitTests
 
             var docRed = new HtmlToPdfDocument()
             {
-                GlobalSettings = { 
+                GlobalSettings = {
                     ColorMode = ColorMode.Color,
                     Orientation = Orientation.Landscape,
                     PaperSize = PaperKind.A4
@@ -121,7 +120,7 @@ namespace WkHtmlToPdfDotNet.UnitTests
                 Objects = {
                     new ObjectSettings() {
                         HtmlContent = $"<img src=\"{redFile}\">",
-                        WebSettings = { DefaultEncoding = "utf-8" }                        
+                        WebSettings = { DefaultEncoding = "utf-8" }
                     }
                 }
             };

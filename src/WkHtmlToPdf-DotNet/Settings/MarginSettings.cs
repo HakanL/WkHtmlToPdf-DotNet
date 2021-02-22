@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 
 namespace WkHtmlToPdfDotNet
 {
@@ -23,14 +19,12 @@ namespace WkHtmlToPdfDotNet
             Unit = Unit.Millimeters;
         }
 
-        public MarginSettings(double top, double right, double bottom, double left) : this()
+        public MarginSettings(double top, double right, double bottom, double left)
+            : this()
         {
             Top = top;
-
             Bottom = bottom;
-
             Left = left;
-
             Right = right;
         }
 
@@ -56,7 +50,6 @@ namespace WkHtmlToPdfDotNet
             }
 
             return value.Value.ToString("0.##", CultureInfo.InvariantCulture) + strUnit;
-
         }
     }
 }

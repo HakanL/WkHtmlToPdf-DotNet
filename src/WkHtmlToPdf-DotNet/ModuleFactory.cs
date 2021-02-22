@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace WkHtmlToPdfDotNet
 {
@@ -36,7 +34,7 @@ namespace WkHtmlToPdfDotNet
                 {
                     // Try 86-bit
                     VersionWin86();
-        
+
                     return new WkHtmlModule();
                 }
                 catch

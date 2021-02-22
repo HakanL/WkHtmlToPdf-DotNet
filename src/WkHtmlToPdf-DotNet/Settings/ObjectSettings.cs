@@ -1,9 +1,6 @@
-﻿using WkHtmlToPdfDotNet.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using WkHtmlToPdfDotNet.Contracts;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WkHtmlToPdfDotNet
 {
@@ -58,13 +55,6 @@ namespace WkHtmlToPdfDotNet
         public LoadSettings LoadSettings { get; set; } = new LoadSettings();
 
         public byte[] GetContent()
-        {
-            if (HtmlContent == null)
-            {
-                return new byte[0];
-            }
-
-            return (Encoding ?? (Encoding.UTF8)).GetBytes(HtmlContent);
-        }
+            => HtmlContent != null ? (Encoding ?? Encoding.UTF8).GetBytes(HtmlContent) : Array.Empty<byte>();
     }
 }

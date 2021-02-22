@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using WkHtmlToPdfDotNet.Contracts;
 using WkHtmlToPdfDotNet.EventDefinitions;
 using System.Globalization;
@@ -11,7 +10,7 @@ namespace WkHtmlToPdfDotNet
 {
     public class BasicConverter : IConverter
     {
-        public ITools Tools { get; private set; }
+        public ITools Tools { get; }
 
         public IDocument ProcessingDocument { get; private set; }
 
@@ -32,14 +31,14 @@ namespace WkHtmlToPdfDotNet
 
         public virtual byte[] Convert(IDocument document)
         {
-            if (document.GetObjects().Count() == 0)
+            if (!document.GetObjects().Any())
             {
                 throw new ArgumentException("No objects is defined in document that was passed. At least one object must be defined.");
             }
 
             ProcessingDocument = document;
 
-            byte[] result = new byte[0];
+            byte[] result = null;
             Tools.Load();
 
             IntPtr converter = CreateConverter(document);
@@ -61,13 +60,13 @@ namespace WkHtmlToPdfDotNet
             Tools.DestroyConverter(converter);
             ProcessingDocument = null;
 
-            return result;
+            return result ?? Array.Empty<byte>();
         }
 
         private void OnPhaseChanged(IntPtr converter)
         {
             int currentPhase = Tools.GetCurrentPhase(converter);
-            var eventArgs = new PhaseChangedArgs()
+            var eventArgs = new PhaseChangedArgs
             {
                 Document = ProcessingDocument,
                 PhaseCount = Tools.GetPhaseCount(converter),
@@ -80,7 +79,7 @@ namespace WkHtmlToPdfDotNet
 
         private void OnProgressChanged(IntPtr converter)
         {
-            var eventArgs = new ProgressChangedArgs()
+            var eventArgs = new ProgressChangedArgs
             {
                 Document = ProcessingDocument,
                 Description = Tools.GetProgressString(converter)
@@ -91,7 +90,7 @@ namespace WkHtmlToPdfDotNet
 
         private void OnFinished(IntPtr converter, int success)
         {
-            var eventArgs = new FinishedArgs()
+            var eventArgs = new FinishedArgs
             {
                 Document = ProcessingDocument,
                 Success = success == 1
@@ -102,7 +101,7 @@ namespace WkHtmlToPdfDotNet
 
         private void OnError(IntPtr converter, string message)
         {
-            var eventArgs = new ErrorArgs()
+            var eventArgs = new ErrorArgs
             {
                 Document = ProcessingDocument,
                 Message = message
@@ -113,7 +112,7 @@ namespace WkHtmlToPdfDotNet
 
         private void OnWarning(IntPtr converter, string message)
         {
-            var eventArgs = new WarningArgs()
+            var eventArgs = new WarningArgs
             {
                 Document = ProcessingDocument,
                 Message = message
@@ -124,13 +123,11 @@ namespace WkHtmlToPdfDotNet
 
         private IntPtr CreateConverter(IDocument document)
         {
-            IntPtr converter;
-
             IntPtr settings = Tools.CreateGlobalSettings();
 
             ApplyConfig(settings, document, true);
 
-            converter = Tools.CreateConverter(settings);
+            IntPtr converter = Tools.CreateConverter(settings);
 
             foreach (var obj in document.GetObjects())
             {

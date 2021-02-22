@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WkHtmlToPdfDotNet.EventDefinitions;
 
 namespace WkHtmlToPdfDotNet.Contracts
 {
     public interface IConverter : IDisposable
     {
-
         /// <summary>
         ///  Converts document based on given settings
         /// </summary>

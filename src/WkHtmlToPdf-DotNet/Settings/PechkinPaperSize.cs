@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace WkHtmlToPdfDotNet
-{ 
+{
     public class PechkinPaperSize
     {
         private static readonly Dictionary<PaperKind, PechkinPaperSize> dictionary = new Dictionary<PaperKind, PechkinPaperSize>()

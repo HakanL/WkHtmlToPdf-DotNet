@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Reflection;
 using System.Collections.Concurrent;
 
 namespace WkHtmlToPdfDotNet
@@ -58,7 +57,7 @@ namespace WkHtmlToPdfDotNet
 
         public string GetGlobalSetting(IntPtr settings, string name)
         {
-            // Default const char * size is 2048 bytes 
+            // Default const char * size is 2048 bytes
             byte[] buffer = new byte[2048];
 
             int size = Marshal.SizeOf(buffer[0]) * buffer.Length;
@@ -100,7 +99,7 @@ namespace WkHtmlToPdfDotNet
 
         public string GetObjectSetting(IntPtr settings, string name)
         {
-            // Default const char * size is 2048 bytes 
+            // Default const char * size is 2048 bytes
             byte[] buffer = new byte[2048];
 
             int size = Marshal.SizeOf(buffer[0]) * buffer.Length;

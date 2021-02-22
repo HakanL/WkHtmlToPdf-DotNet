@@ -1,32 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using WkHtmlToPdfDotNet.Contracts;
 
 namespace WkHtmlToPdfDotNet
 {
     public class HtmlToPdfDocument : IDocument
     {
-        public List<ObjectSettings> Objects { get;  private set;}
-        
-        private GlobalSettings globalSettings = new GlobalSettings();
+        public List<ObjectSettings> Objects { get; } = new List<ObjectSettings>();
 
-        public GlobalSettings GlobalSettings {
-            get { return globalSettings; }
-            set {
-                globalSettings = value;
-            }
-        }
+        public GlobalSettings GlobalSettings { get; set; } = new GlobalSettings();
 
-        public HtmlToPdfDocument()
-        {
-            Objects = new List<ObjectSettings>();
-        }
-
-        public IEnumerable<IObject> GetObjects()
-        {
-            return Objects.ToArray();
-        }   
+        public IEnumerable<IObject> GetObjects() => Objects.ToArray();
     }
 }

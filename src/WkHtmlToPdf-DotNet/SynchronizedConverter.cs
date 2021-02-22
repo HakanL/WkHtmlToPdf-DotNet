@@ -3,7 +3,6 @@ using System;
 using System.Threading;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace WkHtmlToPdfDotNet
 {

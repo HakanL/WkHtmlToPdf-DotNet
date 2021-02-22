@@ -1,8 +1,4 @@
 ﻿using WkHtmlToPdfDotNet.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WkHtmlToPdfDotNet
 {
@@ -20,10 +16,6 @@ namespace WkHtmlToPdfDotNet
 
     public class GlobalSettings : ISettings
     {
-        
-
-        private MarginSettings margins = new MarginSettings();
-
         /// <summary>
         /// The orientation of the output document, must be either "Landscape" or "Portrait". Default = "portrait"
         /// </summary>
@@ -123,84 +115,42 @@ namespace WkHtmlToPdfDotNet
         /// The height of the output document
         /// </summary>
         [WkHtml("size.height")]
-        private string PaperHeight
-        {
-            get {
-                return PaperSize == null ? null : PaperSize.Height;
-            }
-        }
-        
+        private string PaperHeight => PaperSize?.Height;
+
         /// <summary>
         /// The width of the output document
         /// </summary>
         [WkHtml("size.width")]
-        private string PaperWidth
-        {
-            get
-            {
-                return PaperSize == null ? null : PaperSize.Width;
-            }
-        }
+        private string PaperWidth => PaperSize.Width;
 
-        public MarginSettings Margins
-        {
-            get {
-                return this.margins;
-            }
-            set {
-                margins = value;
-            }
-        }
+        public MarginSettings Margins { get; set; } = new MarginSettings();
 
         /// <summary>
         /// Size of the left margin
         /// </summary>
         [WkHtml("margin.left")]
-        private string MarginLeft
-        {
-            get {
-                return margins.GetMarginValue(margins.Left);
-            }
-        }
+        private string MarginLeft => Margins.GetMarginValue(Margins.Left);
 
         /// <summary>
         /// Size of the right margin
         /// </summary>
         [WkHtml("margin.right")]
-        private string MarginRight
-        {
-            get
-            {
-                return margins.GetMarginValue(margins.Right);
-            }
-        }
+        private string MarginRight => Margins.GetMarginValue(Margins.Right);
 
         /// <summary>
         /// Size of the top margin
         /// </summary>
         [WkHtml("margin.top")]
-        private string MarginTop
-        {
-            get
-            {
-                return margins.GetMarginValue(margins.Top);
-            }
-        }
+        private string MarginTop => Margins.GetMarginValue(Margins.Top);
 
         /// <summary>
         /// Size of the bottom margin
         /// </summary>
         [WkHtml("margin.bottom")]
-        private string MarginBottom
-        {
-            get
-            {
-                return margins.GetMarginValue(margins.Bottom);
-            }
-        }
+        private string MarginBottom => Margins.GetMarginValue(Margins.Bottom);
 
         /// <summary>
-        /// Set viewport size. Not supported in wkhtmltopdf API since v0.12.2.4 
+        /// Set viewport size. Not supported in wkhtmltopdf API since v0.12.2.4
         /// </summary>
         [WkHtml("viewportSize")]
         public string ViewportSize { get; set; }
