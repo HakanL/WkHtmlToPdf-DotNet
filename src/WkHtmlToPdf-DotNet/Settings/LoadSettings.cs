@@ -37,7 +37,7 @@ namespace WkHtmlToPdfDotNet
         public double? ZoomFactor { get; set; }
 
         /// <summary>
-        /// Disallow local and piped files to access other local files. Default = false
+        /// Disallow local and piped files to access other local files. Default = true
         /// </summary>
         [WkHtml("load.blockLocalFileAccess")]
         public bool? BlockLocalFileAccess { get; set; }
