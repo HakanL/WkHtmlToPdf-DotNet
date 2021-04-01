@@ -63,10 +63,10 @@ namespace WkHtmlToPdfDotNet
             throw new NotSupportedException("Current platform is not supported");
         }
 
-        [DllImport(@"runtimes\win-x64\native\wkhtmltox", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl, EntryPoint = "wkhtmltopdf_version")]
+        [DllImport(@"runtimes\win-x64\native\wkhtmltox", CharSet = CharSet.Unicode, EntryPoint = "wkhtmltopdf_version")]
         public static extern IntPtr VersionWin64();
 
-        [DllImport(@"runtimes\win-x86\native\wkhtmltox", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl, EntryPoint = "wkhtmltopdf_version")]
+        [DllImport(@"runtimes\win-x86\native\wkhtmltox", CharSet = CharSet.Unicode, EntryPoint = "wkhtmltopdf_version")]
         public static extern IntPtr VersionWin86();
     }
 }
