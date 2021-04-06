@@ -98,3 +98,9 @@ public void ConfigureServices(IServiceCollection services)
     services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 }
 ```
+
+### Docker 
+If you are using the linux version of docker container for net core provided from microsoft, you need to add this line to the dockerfile 
+```
+RUN apt-get update -qq && apt-get -y install libgdiplus libc6-dev
+```
