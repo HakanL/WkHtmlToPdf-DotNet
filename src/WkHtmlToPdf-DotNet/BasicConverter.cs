@@ -39,7 +39,11 @@ namespace WkHtmlToPdfDotNet
             ProcessingDocument = document;
 
             byte[] result = null;
-            Tools.Load();
+
+            if (!Tools.IsLoaded)
+            {
+                Tools.Load();
+            }
 
             IntPtr converter = CreateConverter(document);
 
@@ -179,9 +183,8 @@ namespace WkHtmlToPdfDotNet
 
         private void Apply(IntPtr config, string name, object value, bool isGlobal)
         {
-            var type = value.GetType();
-
             Func<IntPtr, string, string, int> applySetting;
+
             if (isGlobal)
             {
                 applySetting = Tools.SetGlobalSetting;
@@ -191,37 +194,39 @@ namespace WkHtmlToPdfDotNet
                 applySetting = Tools.SetObjectSetting;
             }
 
-            if (typeof(bool) == type)
+            switch (value)
             {
-                applySetting(config, name, ((bool)value == true ? "true" : "false"));
-            }
-            else if (typeof(double) == type)
-            {
-                applySetting(config, name, ((double)value).ToString("0.##", CultureInfo.InvariantCulture));
-            }
-            else if (typeof(Dictionary<string, string>).IsAssignableFrom(type))
-            {
-                var dictionary = (Dictionary<string, string>)value;
-                int index = 0;
+                case bool boolValue:
+                    applySetting(config, name, boolValue ? "true" : "false");
+                    break;
 
-                foreach (var pair in dictionary)
-                {
-                    if (pair.Key == null || pair.Value == null)
+                case double doubleValue:
+                    applySetting(config, name, doubleValue.ToString("0.##", CultureInfo.InvariantCulture));
+                    break;
+
+                case object _ when typeof(Dictionary<string, string>).IsAssignableFrom(value.GetType()):
+                    var dictionary = (Dictionary<string, string>)value;
+
+                    int index = 0;
+                    foreach (var pair in dictionary)
                     {
-                        continue;
+                        if (pair.Key == null || pair.Value == null)
+                        {
+                            continue;
+                        }
+
+                        //https://github.com/wkhtmltopdf/wkhtmltopdf/blob/c754e38b074a75a51327df36c4a53f8962020510/src/lib/reflect.hh#L192
+                        applySetting(config, name + ".append", null);
+                        applySetting(config, string.Format("{0}[{1}]", name, index), pair.Key + "\n" + pair.Value);
+
+                        index++;
                     }
+                    break;
 
-                    //https://github.com/wkhtmltopdf/wkhtmltopdf/blob/c754e38b074a75a51327df36c4a53f8962020510/src/lib/reflect.hh#L192
-                    applySetting(config, name + ".append", null);
-                    applySetting(config, string.Format("{0}[{1}]", name, index), pair.Key + "\n" + pair.Value);
-
-                    index++;
-                }
-            }
-            else
-            {
-                applySetting(config, name, value.ToString());
-            }
+                default:
+                    applySetting(config, name, value.ToString());
+                    break;
+            };
         }
 
         public virtual void Dispose()
