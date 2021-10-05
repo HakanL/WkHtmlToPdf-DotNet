@@ -28,9 +28,9 @@ jobs:
         path: version.json
         prop_path: 'version'
     
-    - run: echo "github.ref: ${{github.ref}}"
+    - run: echo "github.ref: ${{github.ref}}   branch: ${{github.branch}}"
     
-    - name: Get branch name from branch
+    - name: Get branch name from github.ref
       run: echo "BRANCH_NAME=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }' | sed "s/[[:space:]_]/-/g")" >> $GITHUB_ENV
       if: startsWith(github.ref, 'refs/heads/')
     - name: Get branch name from PR
