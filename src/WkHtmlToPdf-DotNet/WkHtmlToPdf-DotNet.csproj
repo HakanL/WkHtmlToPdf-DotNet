@@ -70,5 +70,4 @@
 	<ItemGroup>
 		<Folder Include="build\" />
 	</ItemGroup>
-
 </Project>

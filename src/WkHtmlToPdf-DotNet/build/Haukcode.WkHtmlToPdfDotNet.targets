@@ -6,4 +6,17 @@
 	<Target Name="CopyDllFiles" BeforeTargets="Build">
 		<Copy SourceFiles="@(DllFiles)" DestinationFolder="$(TargetDir)\runtimes\%(RecursiveDir)" />
 	</Target>
+	<ItemGroup Condition=" '$(Platform)' == 'x64' ">
+		<Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\wkhtmltox.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>wkhtmltox.dll</Link>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(Platform)' == 'x86' OR '$(Platform)' == 'AnyCPU' ">
+		<Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\wkhtmltox.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>wkhtmltox.dll</Link>
+		</Content>
+	</ItemGroup>
 </Project>
