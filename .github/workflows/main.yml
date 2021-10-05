@@ -35,7 +35,7 @@ jobs:
       run: echo "BRANCH_NAME=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }' | sed "s/[[:space:]_]/-/g")" >> $GITHUB_ENV
       if: github.head_ref == ''
     - name: Get branch name from PR
-      run: echo "BRANCH_NAME=PR-$(echo $GITHUB_HEAD_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')" >> $GITHUB_ENV
+      run: echo "BRANCH_NAME=PR-$(echo $GITHUB_HEAD_REF)" >> $GITHUB_ENV
       if: github.head_ref != ''
       
     - run: echo Version ${BRANCH_NAME}
