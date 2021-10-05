@@ -29,7 +29,7 @@ jobs:
         prop_path: 'version'
 
     - name: Output branch name
-      run: echo "github.ref ${{github.ref}} baseref ${{github.base_ref}}  head ${{github.head_ref}}"
+      run: echo "test github.ref ${{github.ref}} baseref ${{github.base_ref}}  head ${{github.head_ref}}"
 
     - name: Get branch name from github.ref
       run: echo "BRANCH_NAME=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }' | sed "s/[[:space:]_]/-/g")" >> $GITHUB_ENV
