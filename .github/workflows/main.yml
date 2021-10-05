@@ -42,7 +42,7 @@ jobs:
     - run: echo "PACKAGE_VERSION=${{steps.version.outputs.prop}}.${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
       if: github.ref == 'refs/heads/master' && github.head_ref == ''
     - run: echo "PACKAGE_VERSION=${{steps.version.outputs.prop}}.${GITHUB_RUN_NUMBER}-${BRANCH_NAME}-${GITHUB_SHA::8}" >> $GITHUB_ENV
-      if: github.ref != 'refs/heads/master'
+      if: github.ref != 'refs/heads/master' || github.head_ref != ''
     - run: echo Version is ${PACKAGE_VERSION}
 
     - name: Setup .NET Core
