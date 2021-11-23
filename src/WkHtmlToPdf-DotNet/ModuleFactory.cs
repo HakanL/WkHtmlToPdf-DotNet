@@ -7,18 +7,11 @@ namespace WkHtmlToPdfDotNet
     {
         public static IWkHtmlModule GetModule()
         {
-            // First try the method used by the NuGet package (which uses the deps file)
-            try
-            {
-                return new WkHtmlModule();
-            }
-            catch
-            {
-            }
 #if NETSTANDARD2_0
             // Windows allows us to probe for either 64 or 86 bit versions
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+# endif
                 try
                 {
                     // Try 64-bit
@@ -40,7 +33,8 @@ namespace WkHtmlToPdfDotNet
                 catch
                 {
                 }
-            }
+#if NETSTANDARD2_0
+        }
             else
             {
                 try
