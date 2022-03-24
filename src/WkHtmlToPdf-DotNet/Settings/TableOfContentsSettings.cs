@@ -7,7 +7,7 @@ namespace WkHtmlToPdfDotNet
         /// </summary>
         [WkHtml("isTableOfContent")]
         public bool IsTableOfContent { get; set; }
-        
+
         /// <summary>
         /// Name/Headline of the TOC
         /// </summary>
@@ -19,12 +19,6 @@ namespace WkHtmlToPdfDotNet
         /// </summary>
         [WkHtml("toc.useDottedLines")]
         public bool UseDottedLines { get; set; }
-        
-        public TableOfContentsSettings()
-        {
-            IsTableOfContent = false;
-            CaptionText = "";
-            UseDottedLines = true;
-        }
+
     }
 }
