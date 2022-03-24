@@ -18,12 +18,12 @@ namespace WkHtmlToPdfDotNet
         /// Should we print dots between the name and the page number?
         /// </summary>
         [WkHtml("toc.useDottedLines")]
-        public bool	UseDottedLines { get; set; }
+        public bool UseDottedLines { get; set; }
         
         public TableOfContentsSettings()
         {
-            IsTableOfContent = true;
-            CaptionText = "Table of Contents";
+            IsTableOfContent = false;
+            CaptionText = "";
             UseDottedLines = true;
         }
     }
