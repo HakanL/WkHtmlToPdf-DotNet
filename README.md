@@ -100,10 +100,27 @@ public void ConfigureServices(IServiceCollection services)
 ```
 
 ### Docker 
-If you are using the linux version of docker container for net core provided from microsoft, you need to add this line to the dockerfile 
+If you are using a linux version of docker container for net core provided from microsoft, you will need to install a couple of libraries.
+
+The following **example** is for debian based linux distros;
+
+*Insert the below lines before the `WORKDIR /app`  command*
+
 ```
-RUN apt-get update -qq && apt-get -y install libgdiplus libc6-dev
+RUN apt update
+RUN apt install -y libgdiplus
+RUN ln -s /usr/lib/libgdiplus.so /lib/x86_64-linux-gnu/libgdiplus.so
+RUN apt-get install -y --no-install-recommends zlib1g fontconfig libfreetype6 libx11-6 libxext6 libxrender1 wget gdebi
+RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb
+RUN gdebi --n wkhtmltox_0.12.5-1.stretch_amd64.deb
+RUN apt install libssl1.1
+RUN ln -s /usr/local/lib/libwkhtmltox.so /usr/lib/libwkhtmltox.so
+
 ```
+
+#### Note
+For any other linux distro choose the correct package from the [wkhtmltopdf releases](https://github.com/wkhtmltopdf/wkhtmltopdf/releases) 
+
 
 ### Recommendations
 Do not use wkhtmltopdf with any untrusted HTML – be sure to sanitize any user-supplied HTML/JS, otherwise it can lead to complete takeover of the server it is running on!
