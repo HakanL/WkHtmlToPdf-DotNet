@@ -26,6 +26,38 @@ namespace WkHtmlToPdfDotNet.ConsoleApp
                     PaperSize = PaperKind.A4,
                 },
                 Objects = {
+
+                    new CoverSettings()
+                    {
+                        HtmlContent = @"
+
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8""/>
+  <title>Spoon-Knife</title>
+  <LINK href=""styles.css"" rel=""stylesheet"" type=""text/css"">
+</head>
+
+<body>
+
+<img src=""forkit.gif"" id=""octocat"" alt="""" />
+
+<!-- Feel free to change this text here -->
+<p>
+  Fork me? Fork you, @octocat!
+</p>
+<p>
+  Sean made a change
+</p>
+
+</body>
+</html>
+
+"
+                    },
+
                     new ObjectSettings() {
                         PagesCount = true,
                         HtmlContent = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur mauris eget ultrices iaculis. Ut et odio viverra, molestie lectus nec, venenatis turpis. Nulla quis euismod nisl. Duis scelerisque eros nec dui facilisis, sit amet porta odio varius. Praesent vitae sollicitudin leo. Sed vitae quam in massa eleifend porta. Aliquam pulvinar orci dapibus porta laoreet. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed commodo tortor eget dolor hendrerit dapibus.
