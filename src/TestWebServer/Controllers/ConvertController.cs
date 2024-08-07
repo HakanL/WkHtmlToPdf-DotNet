@@ -8,43 +8,47 @@ using System.IO;
 
 namespace WkHtmlToPdfDotNet.TestWebServer.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class ConvertController : ControllerBase
-    {
-        private readonly IConverter converter;
+  [ApiController]
+  [Route("[controller]")]
+  public class ConvertController : ControllerBase
+  {
+    private readonly IConverter converter;
 
-        public ConvertController(IConverter converter)
-        {
-            this.converter = converter;
-        }
+    public ConvertController(IConverter converter) {
+      this.converter = converter;
+    }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var doc = new HtmlToPdfDocument()
-            {
-                GlobalSettings = {
+    [HttpGet]
+    public IActionResult Get() {
+      var doc = new HtmlToPdfDocument()
+      {
+        GlobalSettings = {
                     PaperSize = PaperKind.A3,
                     Orientation = Orientation.Landscape,
                 },
 
-                Objects = {
-                    new ObjectSettings()
-                    {
-                        Page = "http://google.com/",
-                    },
-                     new ObjectSettings()
-                    {
-                        Page = "https://github.com/",
-
-                    }
-                }
-            };
-
-            byte[] pdf = this.converter.Convert(doc);
-
-            return File(pdf, "application/pdf", "Test.pdf");
+        Objects = {
+            new  CoverSettings()
+            {
+              Page="https://bing.com",
+              IsCover=true,
+              PagesCount=false
+            },
+            new ObjectSettings()
+            {
+                Page = "https://google.com/",
+            },
+              new ObjectSettings()
+            {
+                Page = "https://github.com/",
+                IncludeInOutline = true
+            }
         }
+      };
+
+      byte[] pdf = this.converter.Convert(doc);
+
+      return File(pdf, "application/pdf", "Test.pdf");
     }
+  }
 }
