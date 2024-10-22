@@ -119,7 +119,7 @@ RUN ln -s /usr/local/lib/libwkhtmltox.so /usr/lib/libwkhtmltox.so
 ```
 
 #### Note
-For any other linux distro choose the correct package from the [wkhtmltopdf releases](https://github.com/wkhtmltopdf/wkhtmltopdf/releases) 
+For any other linux distro choose the correct package from the [wkhtmltopdf releases](https://github.com/wkhtmltopdf/packaging/releases) 
 
 
 ### Recommendations
