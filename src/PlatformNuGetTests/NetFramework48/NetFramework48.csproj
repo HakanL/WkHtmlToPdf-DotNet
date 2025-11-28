@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.85" />
+    <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.95" />
   </ItemGroup>
 
 </Project>

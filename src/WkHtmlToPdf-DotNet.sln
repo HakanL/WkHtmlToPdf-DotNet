@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31912.275
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{54EA27C3-173F-43E1-B8B3-134DA04982E7}"
 EndProject
@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore31", "PlatformNuGetT
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform NuGet Tests", "Platform NuGet Tests", "{B2FFFBAA-D0DE-46F5-8500-64E1CAFFD087}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net60", "PlatformNuGetTests\Net60\Net60.csproj", "{6868762E-3A4A-4BE9-9D25-E683BF816B9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net6", "PlatformNuGetTests\Net6\Net6.csproj", "{6868762E-3A4A-4BE9-9D25-E683BF816B9D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net50", "PlatformNuGetTests\Net50\Net50.csproj", "{D3EC978D-CDD4-45A9-85B0-431A8EEE2E19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net5", "PlatformNuGetTests\Net5\Net5.csproj", "{D3EC978D-CDD4-45A9-85B0-431A8EEE2E19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFramework471", "PlatformNuGetTests\NetFramework471\NetFramework471.csproj", "{FD233DB5-682B-45BC-B6C7-8F1040B73A01}"
 EndProject
@@ -32,6 +32,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFramework471OldCsproj", "PlatformNuGetTests\NetFramework471OldCsproj\NetFramework471OldCsproj.csproj", "{F9B8F7A4-52F0-4786-B126-6E82969C4BE3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsoleAppDockerAlpine", "TestConsoleAppDockerAlpine\TestConsoleAppDockerAlpine.csproj", "{06144CDC-9FC2-4A28-A632-A817A381ABC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net10", "PlatformNuGetTests\Net10\Net10.csproj", "{61CA05EE-EBC1-38B1-9D6C-65EC6806D8DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,6 +137,14 @@ Global
 		{06144CDC-9FC2-4A28-A632-A817A381ABC0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{06144CDC-9FC2-4A28-A632-A817A381ABC0}.Release|x64.ActiveCfg = Release|Any CPU
 		{06144CDC-9FC2-4A28-A632-A817A381ABC0}.Release|x64.Build.0 = Release|Any CPU
+		{61CA05EE-EBC1-38B1-9D6C-65EC6806D8DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61CA05EE-EBC1-38B1-9D6C-65EC6806D8DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61CA05EE-EBC1-38B1-9D6C-65EC6806D8DE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{61CA05EE-EBC1-38B1-9D6C-65EC6806D8DE}.Debug|x64.Build.0 = Debug|Any CPU
+		{61CA05EE-EBC1-38B1-9D6C-65EC6806D8DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61CA05EE-EBC1-38B1-9D6C-65EC6806D8DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61CA05EE-EBC1-38B1-9D6C-65EC6806D8DE}.Release|x64.ActiveCfg = Release|Any CPU
+		{61CA05EE-EBC1-38B1-9D6C-65EC6806D8DE}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +161,7 @@ Global
 		{A92BFBAB-4970-41B0-B307-A99F950DC66B} = {B2FFFBAA-D0DE-46F5-8500-64E1CAFFD087}
 		{F9B8F7A4-52F0-4786-B126-6E82969C4BE3} = {B2FFFBAA-D0DE-46F5-8500-64E1CAFFD087}
 		{06144CDC-9FC2-4A28-A632-A817A381ABC0} = {54EA27C3-173F-43E1-B8B3-134DA04982E7}
+		{61CA05EE-EBC1-38B1-9D6C-65EC6806D8DE} = {B2FFFBAA-D0DE-46F5-8500-64E1CAFFD087}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6AA59086-45D0-4FDC-BCA3-005F5E4FE501}
